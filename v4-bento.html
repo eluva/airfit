@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AirFit — Ayollar va qizlar uchun</title>
+<meta name="description" content="AirFit — Toshkentdagi ayollar fitnes zali. Fitnes, raqs, massaj, bolalar gimnastikasi, manikyur va bochka muolajasi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF7F2; --ink:#1E1A2B; --ink2:#5D5770;
+    --lilac:#CDBBFF; --lilac-d:#7C5CFF; --peach:#FFC7A6; --mint:#BDEBD3; --butter:#FFE58A; --pink:#FFB8D2; --white:#FFFFFF;
+    --r:32px; --h:"Unbounded", system-ui, sans-serif; --b:"Manrope", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--b);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,h4{font-family:var(--h);font-weight:700;line-height:1.02;letter-spacing:-.02em;overflow-wrap:break-word}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--white);font-size:13px;font-weight:700;border:1.5px solid var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:999px;font-weight:800;font-size:15px;border:2px solid var(--ink);transition:.2s;cursor:pointer;font-family:var(--b)}
+  .btn-k{background:var(--ink);color:var(--white)}
+  .btn-k:hover,.btn-w:hover{transform:translate(-3px,-3px);box-shadow:4px 4px 0 var(--ink)}
+  .btn-k:hover{background:var(--lilac-d)}
+  .btn-w{background:var(--white);color:var(--ink)}
+  .tile{border-radius:var(--r);border:2px solid var(--ink);overflow:hidden;position:relative}
+
+  /* nav */
+  header{padding:18px 0;position:sticky;top:0;z-index:50}
+  .nav{display:flex;align-items:center;justify-content:space-between;background:var(--white);border:2px solid var(--ink);border-radius:999px;padding:8px 8px 8px 24px}
+  .logo{font-family:var(--h);font-weight:800;font-size:22px;display:flex;align-items:center;gap:8px}
+  .logo i{width:26px;height:26px;border-radius:50%;background:var(--lilac-d);display:inline-block;position:relative}
+  .logo i:after{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--butter)}
+  .nav ul{display:flex;gap:4px;list-style:none}
+  .nav ul a{padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px}
+  .nav ul a:hover{background:var(--lilac)}
+  .nav .btn{padding:12px 20px;font-size:14px}
+  .burger{display:none;background:var(--butter);border:2px solid var(--ink);border-radius:999px;padding:10px 16px;font-weight:800;cursor:pointer;font-family:var(--b)}
+
+  /* hero bento */
+  .hero{padding:16px 0 60px}
+  .bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:minmax(120px,auto);gap:16px}
+  .b-title{grid-column:span 6;grid-row:span 3;background:var(--lilac);padding:44px;display:flex;flex-direction:column;justify-content:space-between}
+  .b-title h1{font-size:clamp(44px,6.2vw,92px);margin:22px 0}
+  .b-title h1 span{background:var(--butter);padding:0 12px;border-radius:18px;border:2px solid var(--ink);display:inline-block;transform:rotate(-2deg)}
+  .b-title p{font-size:18px;max-width:460px;color:#2d2640;font-weight:500}
+  .b-title .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+  .b-photo{grid-column:span 6;grid-row:span 2;min-height:360px}
+  .b-photo img,.b-photo2 img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+  .b-photo .lab{position:absolute;left:16px;bottom:16px}
+  .b-stat{grid-column:span 2;background:var(--butter);padding:22px;display:flex;flex-direction:column;justify-content:space-between}
+  .b-stat b{font-family:var(--h);font-size:40px;line-height:1}
+  .b-stat span{font-weight:700;font-size:13px}
+  .b-stat.m{background:var(--mint)}
+  .b-photo2{grid-column:span 2;min-height:170px}
+  .sticker{position:absolute;right:6px;top:-12px;z-index:3;width:120px;height:120px;background:var(--pink);border:2px solid var(--ink);border-radius:50%;display:grid;place-items:center;text-align:center;font-family:var(--h);font-weight:800;font-size:15px;line-height:1.1;transform:rotate(12deg);animation:wob 4s ease-in-out infinite}
+  @keyframes wob{50%{transform:rotate(-6deg) scale(1.05)}}
+  .hero-wrap{position:relative}
+
+  /* marquee */
+  .mq{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);background:var(--ink);color:var(--white);overflow:hidden}
+  .mq-t{display:flex;gap:20px;padding:14px 0;white-space:nowrap;animation:mq 26s linear infinite;font-family:var(--h);font-weight:700;font-size:22px;align-items:center}
+  .mq-t .dot{width:14px;height:14px;border-radius:50%;background:var(--butter);display:inline-block}
+  .mq-t .dot.l{background:var(--lilac)}.mq-t .dot.p{background:var(--pink)}.mq-t .dot.m{background:var(--mint)}
+  @keyframes mq{to{transform:translateX(-50%)}}
+
+  section{padding:100px 0}
+  .sh{text-align:center;max-width:720px;margin:0 auto 56px}
+  .sh h2{font-size:clamp(36px,5vw,64px);margin:18px 0 16px}
+  .sh p{color:var(--ink2);font-size:17px}
+  .hl{color:var(--lilac-d)}
+
+  /* services bento */
+  .svc{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  .sv{padding:28px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:.25s}
+  .sv:hover{transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--ink)}
+  .sv .ic{width:62px;height:62px;border-radius:20px;background:var(--white);border:2px solid var(--ink);display:grid;place-items:center;font-size:30px}
+  .sv h3{font-size:28px;margin:20px 0 10px}
+  .sv p{color:#3a3350;font-weight:500}
+  .sv.w2{grid-column:span 2}.sv.w3{grid-column:span 3}.sv.w4{grid-column:span 4}
+  .sv.ph{padding:0;min-height:280px}
+  .sv.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .sv.ph .chip{position:absolute;left:18px;bottom:18px}
+  .c-l{background:var(--lilac)}.c-p{background:var(--peach)}.c-m{background:var(--mint)}.c-b{background:var(--butter)}.c-k{background:var(--pink)}.c-w{background:var(--white)}
+
+  /* kids band */
+  .kids{background:var(--mint);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+  .kids-g{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .kids h2{font-size:clamp(36px,4.6vw,60px);margin:18px 0 20px}
+  .kids p{font-size:17px;color:#24402f;font-weight:500;margin-bottom:24px}
+  .kids .ph{aspect-ratio:1/1;border-radius:50% 50% var(--r) var(--r);background:var(--white)}
+  .kids .ph img{width:100%;height:100%;object-fit:cover}
+  .ages{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+
+  /* schedule */
+  .tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+  .tabs button{font-family:var(--h);font-weight:700;font-size:15px;padding:12px 18px;border-radius:999px;border:2px solid var(--ink);background:var(--white);cursor:pointer;color:var(--ink)}
+  .tabs button.on{background:var(--ink);color:var(--white)}
+  .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;max-width:1080px;margin:0 auto}
+  .slot{padding:22px;border-radius:24px;border:2px solid var(--ink);background:var(--white)}
+  .slot .tm{font-family:var(--h);font-weight:800;font-size:28px}
+  .slot h4{font-family:var(--b);font-weight:800;font-size:18px;margin:8px 0 2px}
+  .slot small{color:var(--ink2);font-weight:600}
+
+  /* trainers */
+  .trs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .trn{background:var(--white);padding:12px 12px 22px;text-align:center}
+  .trn .ph{border-radius:22px;overflow:hidden;aspect-ratio:1/1;margin-bottom:16px;border:2px solid var(--ink)}
+  .trn img{width:100%;height:100%;object-fit:cover}
+  .trn h4{font-size:22px}
+  .trn small{font-weight:700;color:var(--ink2)}
+  .trn:nth-child(1) .ph{background:var(--lilac)}
+
+  /* prices */
+  .prc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+  .pc{padding:34px;display:flex;flex-direction:column}
+  .pc h3{font-size:24px}
+  .pc .pr{font-family:var(--h);font-weight:800;font-size:44px;margin:20px 0 2px;line-height:1}
+  .pc .pr small{font-family:var(--b);font-size:15px;font-weight:700}
+  .pc ul{list-style:none;margin:22px 0 28px;display:grid;gap:10px;font-weight:600}
+  .pc li{display:flex;gap:10px}
+  .pc li:before{content:"✓";width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--white);font-size:12px;display:grid;place-items:center;flex:none}
+  .pc .btn{justify-content:center}
+  .pc.pop{transform:rotate(-1.5deg)}
+  .pc .badge{align-self:flex-start;margin-bottom:14px}
+  .extras{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .ex{padding:22px;background:var(--white);display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .ex b{font-family:var(--h);font-size:20px}
+  .ex span{font-weight:700;font-size:14px}
+
+  /* reviews */
+  .rvs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .rv{padding:30px}
+  .rv p{font-size:18px;font-weight:600;margin:16px 0 22px}
+  .rv .who{display:flex;gap:12px;align-items:center;font-weight:800}
+  .rv .av{width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:var(--white);display:grid;place-items:center;font-family:var(--h)}
+  .stars{font-size:18px;letter-spacing:2px}
+
+  /* faq */
+  .faq{max-width:860px;margin:0 auto;display:grid;gap:12px}
+  details{background:var(--white);border:2px solid var(--ink);border-radius:24px;padding:22px 26px}
+  summary{font-family:var(--h);font-weight:700;font-size:18px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px}
+  summary::-webkit-details-marker{display:none}
+  summary:after{content:"+";font-size:26px;line-height:.8;transition:.2s}
+  details[open] summary:after{transform:rotate(45deg)}
+  details p{margin-top:12px;color:var(--ink2);font-weight:500}
+
+  /* contact */
+  .ct{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .ct-form{grid-column:span 5;background:var(--peach);padding:40px}
+  .ct-form h2{font-size:clamp(32px,3.6vw,48px);margin:16px 0 24px}
+  .ct-form form{display:grid;gap:10px}
+  .ct-form input,.ct-form select{padding:16px 20px;border-radius:999px;border:2px solid var(--ink);font:inherit;font-weight:600;background:var(--white);color:var(--ink)}
+  .ct-map{grid-column:span 7;min-height:440px;background:var(--white)}
+  .ct-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .ct-i{grid-column:span 4;padding:26px;display:flex;flex-direction:column;gap:6px}
+  .ct-i small{font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+  .ct-i b{font-family:var(--h);font-size:22px}
+
+  footer{padding:50px 0 40px}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-weight:600;color:var(--ink2)}
+
+  .back{position:fixed;left:16px;bottom:16px;z-index:60;background:var(--butter);border:2px solid var(--ink);color:var(--ink);font-size:12px;font-weight:800;padding:8px 14px;border-radius:999px}
+
+  @media (max-width:1000px){
+    .nav ul,.nav .btn{display:none}.burger{display:block}
+    .nav.open{border-radius:28px;flex-wrap:wrap}
+    .nav.open ul{display:flex;flex-direction:column;width:100%;padding:10px 0}
+    .b-title,.b-photo{grid-column:span 12}
+    .b-stat{grid-column:span 6}
+    .b-photo2{grid-column:span 12;min-height:220px}
+    .svc{grid-template-columns:1fr 1fr}.sv.w2,.sv.w3{grid-column:span 1}.sv.w4{grid-column:span 2}
+    .kids-g{grid-template-columns:1fr}
+    .trs{grid-template-columns:1fr 1fr}
+    .prc,.rvs{grid-template-columns:1fr}.pc.pop{transform:none}
+    .extras{grid-template-columns:1fr 1fr}
+    .ct-form,.ct-map,.ct-i{grid-column:span 12}
+    section{padding:76px 0}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 16px}
+    .b-title{padding:28px}
+    .b-stat{grid-column:span 6}
+    .svc{grid-template-columns:1fr}.sv.w4{grid-column:auto}
+    .extras{grid-template-columns:1fr}
+    .sticker{width:96px;height:96px;font-size:12px;right:0}
+    .ct-form{padding:28px}
+    .sh h2,.kids h2{font-size:26px}
+  }
+</style>
+</head>
+<body>
+<a class="back" href="index.html">← Barcha versiyalar</a>
+
+<header>
+  <div class="wrap">
+    <nav class="nav" id="nav">
+      <a href="#" class="logo"><i></i>airfit</a>
+      <ul>
+        <li><a href="#xizmatlar">Xizmatlar</a></li>
+        <li><a href="#bolalar">Bolalar</a></li>
+        <li><a href="#jadval">Jadval</a></li>
+        <li><a href="#narxlar">Narxlar</a></li>
+        <li><a href="#manzil">Manzil</a></li>
+      </ul>
+      <a href="#manzil" class="btn btn-k">Yozilish ✦</a>
+      <button class="burger" onclick="document.getElementById('nav').classList.toggle('open')">Menyu</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-wrap">
+      <div class="sticker">1-dars<br>BEPUL!</div>
+      <div class="bento">
+        <div class="tile b-title">
+          <div><span class="chip">💜 Faqat ayollar va qizlar uchun</span></div>
+          <div>
+            <h1>Harakat qil,<br><span>quvon</span>, porla!</h1>
+            <p>Toshkentdagi AirFit’da fitnes, raqs, massaj va go‘zallik xizmatlari bir joyda. Farzandingiz uchun esa gimnastika darslari bor.</p>
+            <div class="row">
+              <a href="#manzil" class="btn btn-k">Bepul sinov darsi →</a>
+              <a href="#jadval" class="btn btn-w">Jadvalni ko‘rish</a>
+            </div>
+          </div>
+        </div>
+        <div class="tile b-photo">
+          <img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=1000&q=80&auto=format&fit=crop" alt="Ayollar guruh mashg‘ulotida">
+          <span class="chip lab">🔥 Guruh darslari</span>
+        </div>
+        <div class="tile b-stat"><b>10K</b><span>Instagram’dagi do‘stlarimiz</span></div>
+        <div class="tile b-stat m"><b>6</b><span>yo‘nalish bir joyda</span></div>
+        <div class="tile b-photo2"><img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=800&q=80&auto=format&fit=crop" alt="Raqs"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mq" aria-hidden="true">
+    <div class="mq-t">
+      <span>Fitnes</span><i class="dot"></i><span>Raqs</span><i class="dot l"></i><span>Massaj</span><i class="dot p"></i><span>Bolalar gimnastikasi</span><i class="dot m"></i><span>Manikyur</span><i class="dot"></i><span>Pedikyur</span><i class="dot l"></i><span>Bochka muolajasi</span><i class="dot p"></i>
+      <span>Fitnes</span><i class="dot"></i><span>Raqs</span><i class="dot l"></i><span>Massaj</span><i class="dot p"></i><span>Bolalar gimnastikasi</span><i class="dot m"></i><span>Manikyur</span><i class="dot"></i><span>Pedikyur</span><i class="dot l"></i><span>Bochka muolajasi</span><i class="dot p"></i>
+    </div>
+  </div>
+
+  <section id="xizmatlar">
+    <div class="wrap">
+      <div class="sh">
+        <span class="chip">✨ Xizmatlar</span>
+        <h2>Sevimli mashg‘ulotingizni <span class="hl">tanlang</span></h2>
+        <p>Har bir kayfiyat va maqsadga mos yo‘nalish bor. Ularni aralashtirib, o‘zingizga qulay jadval tuzishingiz mumkin.</p>
+      </div>
+      <div class="svc">
+        <a href="#jadval" class="tile sv w2 c-l"><div class="ic">🏋️‍♀️</div><div><h3>Fitnes</h3><p>Trenajyor zali, funksional va kuch mashg‘ulotlari, kardio.</p></div></a>
+        <div class="tile sv ph w2"><img src="https://images.unsplash.com/photo-1609899537878-88d5ba429bdb?w=700&q=75&auto=format&fit=crop" alt=""><span class="chip">Zamonaviy trenajyorlar</span></div>
+        <a href="#jadval" class="tile sv w2 c-k"><div class="ic">💃</div><div><h3>Raqs</h3><p>Zumba, latina va zamonaviy raqs. Ham quvonch, ham kardio.</p></div></a>
+        <a href="#narxlar" class="tile sv w3 c-p"><div class="ic">💆‍♀️</div><div><h3>Massaj</h3><p>Tiklovchi, antitsellyulit va relaks massaj. Mashg‘ulotdan keyin tanangiz bunga minnatdor bo‘ladi.</p></div></a>
+        <a href="#narxlar" class="tile sv w3 c-b"><div class="ic">🛁</div><div><h3>Bochka muolajasi</h3><p>Fito-bochka tanani detoks qiladi, mushaklarni bo‘shashtiradi va terini yumshatadi.</p></div></a>
+        <a href="#narxlar" class="tile sv w4 c-w"><div class="ic">💅</div><div><h3>Manikyur & pedikyur</h3><p>Mashg‘ulotdan keyin go‘zallikka ham vaqt ajrating. Hammasi bitta binoda, boshqa joyga borish shart emas.</p></div></a>
+        <a href="#bolalar" class="tile sv w2 c-m"><div class="ic">🤸‍♀️</div><div><h3>Bolalar</h3><p>Qizlar uchun gimnastika darslari.</p></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="kids" id="bolalar">
+    <div class="wrap kids-g">
+      <div class="tile ph"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=900&q=80&auto=format&fit=crop" alt="Quvnoq qizcha"></div>
+      <div>
+        <span class="chip">🤸‍♀️ Bolalar gimnastikasi</span>
+        <h2>Siz mashq qilasiz, qizingiz esa <span class="hl">gimnastikada</span></h2>
+        <p>Darslarimiz egiluvchanlik, muvozanat va to‘g‘ri qad-qomatni rivojlantiradi. Mashg‘ulotlar o‘yin tarzida o‘tadi, shuning uchun bolalar ularni sabrsizlik bilan kutadi.</p>
+        <div class="ages"><span class="chip">4–6 yosh</span><span class="chip">7–10 yosh</span><span class="chip">11–14 yosh</span></div>
+        <a href="#manzil" class="btn btn-k">Qizimni yozdirish →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="jadval">
+    <div class="wrap">
+      <div class="sh">
+        <span class="chip">🗓 Jadval</span>
+        <h2>Bu hafta <span class="hl">nima bor?</span></h2>
+        <p>Kunni tanlang. Guruh darslariga oldindan yozilish tavsiya etiladi.</p>
+      </div>
+      <div class="tabs" id="tabs"></div>
+      <div class="slots" id="slots"></div>
+    </div>
+  </section>
+
+  <section id="trenerlar" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh">
+        <span class="chip">👋 Trenerlarimiz</span>
+        <h2>Yoningizda <span class="hl">dugonalardek</span> bo‘lamiz</h2>
+      </div>
+      <div class="trs">
+        <div class="tile trn"><div class="ph"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500&q=75&auto=format&fit=crop" alt=""></div><h4>Arofat</h4><small>Asoschi · Bosh trener</small></div>
+        <div class="tile trn"><div class="ph" style="background:var(--pink)"><img src="https://images.unsplash.com/photo-1535525153412-5a42439a210d?w=500&q=75&auto=format&fit=crop" alt=""></div><h4>Malika</h4><small>Raqs</small></div>
+        <div class="tile trn"><div class="ph" style="background:var(--mint)"><img src="https://images.unsplash.com/photo-1566241142559-40e1dab266c6?w=500&q=75&auto=format&fit=crop" alt=""></div><h4>Dilnoza</h4><small>Fitnes · Funksional</small></div>
+        <div class="tile trn"><div class="ph" style="background:var(--butter)"><img src="https://images.unsplash.com/photo-1593164842264-854604db2260?w=500&q=75&auto=format&fit=crop" alt=""></div><h4>Sevara</h4><small>Stretching · Bolalar</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="narxlar" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh">
+        <span class="chip">💸 Narxlar</span>
+        <h2>Oddiy va <span class="hl">tushunarli</span> narxlar</h2>
+        <p>Birinchi dars bepul. Dugonangiz bilan kelsangiz, ikkalangizga ham chegirma beramiz.</p>
+      </div>
+      <div class="prc">
+        <div class="tile pc c-w"><h3>Bir martalik</h3><div class="pr">50 000 <small>so‘m</small></div><ul><li>1 tashrif</li><li>Guruh darsi yoki zal</li><li>Trener maslahati</li></ul><a href="#manzil" class="btn btn-w">Tanlash</a></div>
+        <div class="tile pc pop c-l"><span class="chip badge">⭐ Eng ommabop</span><h3>Oylik</h3><div class="pr">350 000 <small>so‘m/oy</small></div><ul><li>12 ta mashg‘ulot</li><li>Barcha guruh darslari</li><li>Trenajyor zali</li><li>Shaxsiy dastur</li></ul><a href="#manzil" class="btn btn-k">Yozilish</a></div>
+        <div class="tile pc c-b"><h3>Cheksiz</h3><div class="pr">450 000 <small>so‘m/oy</small></div><ul><li>Cheksiz tashrif</li><li>Barcha yo‘nalishlar</li><li>1 ta massaj sovg‘a 🎁</li></ul><a href="#manzil" class="btn btn-w">Tanlash</a></div>
+      </div>
+      <div class="extras">
+        <div class="tile ex"><span>🤸‍♀️ Bolalar / oy</span><b>250K</b></div>
+        <div class="tile ex"><span>💆‍♀️ Massaj</span><b>120K</b></div>
+        <div class="tile ex"><span>🛁 Bochka</span><b>80K</b></div>
+        <div class="tile ex"><span>💅 Manikyur</span><b>90K</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mijozlar" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh"><span class="chip">💬 Mijozlar</span><h2>Ular nima <span class="hl">deydi?</span></h2></div>
+      <div class="rvs">
+        <div class="tile rv c-k"><div class="stars">★★★★★</div><p>“Uch oyda 8 kilo tashladim. Endi zalga xursand bo‘lib kelaman!”</p><div class="who"><span class="av">D</span>Dilfuza</div></div>
+        <div class="tile rv c-m"><div class="stars">★★★★★</div><p>“Qizim gimnastikaga, men esa raqsga boraman. Ikkalamiz bir vaqtda shug‘ullanamiz, juda qulay!”</p><div class="who"><span class="av">N</span>Nigora</div></div>
+        <div class="tile rv c-p"><div class="stars">★★★★★</div><p>“Bochka va massajdan keyin o‘zimni butunlay yangilangandek his qilaman.”</p><div class="who"><span class="av">M</span>Madina</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="sh"><span class="chip">❓ Savollar</span><h2>Ko‘p so‘raladigan <span class="hl">savollar</span></h2></div>
+      <div class="faq">
+        <details open><summary>Zalda erkaklar bo‘ladimi?</summary><p>Yo‘q. AirFit faqat ayollar va qizlar uchun mo‘ljallangan, trenerlarimiz ham ayollar.</p></details>
+        <details><summary>Men hech qachon shug‘ullanmaganman. Bo‘ladimi?</summary><p>Albatta! Birinchi bepul darsda trener darajangizni aniqlaydi va siz uchun mos dastur tuzib beradi.</p></details>
+        <details><summary>O‘zim bilan nima olib kelishim kerak?</summary><p>Sport kiyimi, toza poyabzal, sochiq va suv. Qolgan hamma narsa zalda bor.</p></details>
+        <details><summary>Bolani necha yoshdan olib kelsa bo‘ladi?</summary><p>Gimnastika guruhlari 4 yoshdan boshlanadi. Aniq guruhni telefon orqali bilib olishingiz mumkin.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="manzil" style="padding-top:0">
+    <div class="wrap ct">
+      <div class="tile ct-form">
+        <span class="chip">📍 Bizga keling</span>
+        <h2>Bepul sinov darsiga yoziling</h2>
+        <form onsubmit="event.preventDefault();this.querySelector('button').textContent='Rahmat! Tez orada qo‘ng‘iroq qilamiz 💜'">
+          <input placeholder="Ismingiz" required>
+          <input type="tel" placeholder="+998 __ ___ __ __" required>
+          <select><option>Fitnes</option><option>Raqs</option><option>Massaj</option><option>Bolalar gimnastikasi</option><option>Go‘zallik</option></select>
+          <button class="btn btn-k" style="justify-content:center">Yuborish →</button>
+        </form>
+      </div>
+      <div class="tile ct-map"><iframe src="https://yandex.uz/map-widget/v1/?ll=69.195849%2C41.327619&z=16&pt=69.195849%2C41.327619%2Cpm2rdm" loading="lazy" title="AirFit xaritada"></iframe></div>
+      <a href="tel:+998946739499" class="tile ct-i c-l"><small>Telefon</small><b>+998 94 673 94 99</b></a>
+      <a href="https://www.instagram.com/airfit_uz/" target="_blank" rel="noopener" class="tile ct-i c-k"><small>Instagram</small><b>@airfit_uz</b></a>
+      <div class="tile ct-i c-m"><small>Ish vaqti</small><b>Du–Sh · 08:00–21:00</b></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#" class="logo"><i></i>airfit</a>
+    <span>© 2026 AirFit · Ayollar fitnes zali · Toshkent</span>
+  </div>
+</footer>
+
+<script>
+  const S={
+    'Du':[['08:00','Ertalabki fitnes','Arofat','c-l'],['10:00','Pilates','Sevara','c-m'],['16:00','Bolalar gimnastikasi','Sevara','c-b'],['18:30','Zumba','Malika','c-k'],['19:30','Kuch mashg‘uloti','Dilnoza','c-p']],
+    'Se':[['09:00','Yoga-stretching','Sevara','c-m'],['16:00','Bolalar gimnastikasi','Sevara','c-b'],['18:30','Latina','Malika','c-k'],['19:30','Funksional','Dilnoza','c-p']],
+    'Ch':[['08:00','Ertalabki fitnes','Arofat','c-l'],['10:00','Pilates','Sevara','c-m'],['18:30','Zumba','Malika','c-k'],['19:30','Kuch mashg‘uloti','Dilnoza','c-p']],
+    'Pa':[['09:00','Yoga-stretching','Sevara','c-m'],['16:00','Bolalar gimnastikasi','Sevara','c-b'],['18:30','Latina','Malika','c-k'],['19:30','Funksional','Dilnoza','c-p']],
+    'Ju':[['08:00','Ertalabki fitnes','Arofat','c-l'],['18:30','Raqs mix','Malika','c-k'],['19:30','Kuch mashg‘uloti','Dilnoza','c-p']],
+    'Sh':[['10:00','Bolalar gimnastikasi','Sevara','c-b'],['11:30','Raqs','Malika','c-k'],['13:00','Stretching','Sevara','c-m']]
+  };
+  const names={Du:'Dushanba',Se:'Seshanba',Ch:'Chorshanba',Pa:'Payshanba',Ju:'Juma',Sh:'Shanba'};
+  const tabs=document.getElementById('tabs'),slots=document.getElementById('slots');
+  function show(d){
+    [...tabs.children].forEach(b=>b.classList.toggle('on',b.dataset.d===d));
+    slots.innerHTML=S[d].map(s=>`<div class="slot ${s[3]}"><div class="tm">${s[0]}</div><h4>${s[1]}</h4><small>Trener: ${s[2]}</small></div>`).join('');
+  }
+  Object.keys(S).forEach(d=>{const b=document.createElement('button');b.textContent=names[d];b.dataset.d=d;b.onclick=()=>show(d);tabs.appendChild(b)});
+  show({1:'Du',2:'Se',3:'Ch',4:'Pa',5:'Ju',6:'Sh'}[new Date().getDay()]||'Du');
+</script>
+</body>
+</html>

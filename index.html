@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AirFit — Dizayn versiyalari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4F3F1;--fg:#141414;--dim:#6b6b6b;--line:#dcdad6;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;padding:48px 24px 80px}
+  .wrap{max-width:1320px;margin:0 auto}
+  h1{font-size:clamp(32px,4vw,52px);letter-spacing:-.03em;font-weight:700}
+  .sub{color:var(--dim);margin:10px 0 40px;max-width:640px;line-height:1.55}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:.25s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 20px 50px -20px rgba(0,0,0,.25)}
+  .frame{position:relative;height:400px;overflow:hidden;border-bottom:1px solid var(--line);background:#eee}
+  .frame iframe{position:absolute;top:0;left:0;width:1440px;height:1000px;border:0;transform-origin:0 0;pointer-events:none}
+  .meta{padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .meta h2{font-size:20px;letter-spacing:-.01em}
+  .meta p{color:var(--dim);font-size:14px;margin-top:4px;line-height:1.5}
+  .sw{display:flex;gap:6px;margin-top:10px}
+  .sw i{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.1)}
+  .open{flex:none;background:var(--fg);color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:12px 18px;border-radius:999px}
+  .open:hover{background:#444}
+  a.cover{position:absolute;inset:0;z-index:2}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}.frame{height:300px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AirFit — 4 ta dizayn versiyasi</h1>
+  <p class="sub">Ayollar fitnes zali uchun to‘rtta turli yo‘nalish. Har birini ochib to‘liq ko‘ring. Barcha versiyalar telefonda ham to‘g‘ri ko‘rinadi.</p>
+  <div class="grid">
+    <div class="card">
+      <div class="frame"><iframe src="v1-nafis.html" loading="lazy" tabindex="-1" title="V1"></iframe><a class="cover" href="v1-nafis.html"></a></div>
+      <div class="meta"><div><h2>01 · Nafis</h2><p>Nozik va iliq uslub: krem va pushti ranglar, serif shrift, arka shaklidagi rasmlar.</p><div class="sw"><i style="background:#F7F1EB"></i><i style="background:#E9CFC5"></i><i style="background:#B4644F"></i><i style="background:#3A2330"></i></div></div><a class="open" href="v1-nafis.html">Ochish →</a></div>
+    </div>
+    <div class="card">
+      <div class="frame"><iframe src="v2-energiya.html" loading="lazy" tabindex="-1" title="V2"></iframe><a class="cover" href="v2-energiya.html"></a></div>
+      <div class="meta"><div><h2>02 · Energiya</h2><p>Qorong‘i fon, pushti va lime ranglar, katta sport shrifti, interaktiv jadval.</p><div class="sw"><i style="background:#0D0C0F"></i><i style="background:#FF2E88"></i><i style="background:#D6FF3D"></i><i style="background:#F5F2F7"></i></div></div><a class="open" href="v2-energiya.html">Ochish →</a></div>
+    </div>
+    <div class="card">
+      <div class="frame"><iframe src="v3-jurnal.html" loading="lazy" tabindex="-1" title="V3"></iframe><a class="cover" href="v3-jurnal.html"></a></div>
+      <div class="meta"><div><h2>03 · Jurnal</h2><p>Moda jurnali uslubi: oq-qora rasmlar, qizil urg‘u va “narxlar menyusi”.</p><div class="sw"><i style="background:#F1EDE6"></i><i style="background:#151413"></i><i style="background:#E2492B"></i></div></div><a class="open" href="v3-jurnal.html">Ochish →</a></div>
+    </div>
+    <div class="card">
+      <div class="frame"><iframe src="v4-bento.html" loading="lazy" tabindex="-1" title="V4"></iframe><a class="cover" href="v4-bento.html"></a></div>
+      <div class="meta"><div><h2>04 · Bento</h2><p>Quvnoq pastel ranglar va bento kartochkalar. Oilaviy ruhda, bolalar bo‘limi va savol-javoblar bilan.</p><div class="sw"><i style="background:#CDBBFF"></i><i style="background:#FFC7A6"></i><i style="background:#BDEBD3"></i><i style="background:#FFE58A"></i><i style="background:#1E1A2B"></i></div></div><a class="open" href="v4-bento.html">Ochish →</a></div>
+    </div>
+  </div>
+</div>
+<script>
+  // scale the 1440px-wide previews to fit each card
+  const fit=()=>document.querySelectorAll('.frame').forEach(f=>{f.querySelector('iframe').style.transform=`scale(${f.clientWidth/1440})`});
+  addEventListener('resize',fit);fit();
+</script>
+</body>
+</html>
