@@ -1,14 +1,21 @@
-# AirFit — website design concepts
+# AirFit — website
 
-Four design directions for [AirFit](https://www.instagram.com/airfit_uz/), a women-only fitness studio in Tashkent.
+Website for [AirFit](https://www.instagram.com/airfit_uz/), a women-only fitness studio in Kukcha, Tashkent. Founder and trainer: Arofat Ozodovna.
 
-Open `index.html` to compare them.
+Single static page, no build step: open `index.html`, or upload `index.html` and `images/` to any static host.
 
-| # | File | Style |
-|---|------|-------|
-| 01 | `v1-nafis.html` | Elegant — cream & blush, serif type, arch photos |
-| 02 | `v2-energiya.html` | Bold — dark, hot pink & lime, interactive schedule |
-| 03 | `v3-jurnal.html` | Editorial — magazine layout, B&W photos, red accent |
-| 04 | `v4-bento.html` | Playful — pastel bento grid, kids section, FAQ |
+## Editing
 
-Prices, schedule, trainer names, reviews and photos are placeholders.
+- **Schedule**: the `SCHEDULE` object at the bottom of `index.html`.
+- **Phone** used by the sign-up form (Telegram / WhatsApp links): `PHONE` in the same script.
+- **Prices**: the `#narxlar` section.
+
+## Confirm before launch
+
+These are not verified with the studio yet:
+
+- Class times in the schedule (class types come from AirFit's 1Fit listing, times are made up).
+- Prices, and what each plan includes.
+- Working hours (Mon–Sat 08:00–21:00).
+- That the first class is free.
+- That +998 94 673 94 99 is on Telegram and WhatsApp.
