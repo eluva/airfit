@@ -1,0 +1,11 @@
+name = "airfit-orders"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://eluva.github.io"
+
+# Secrets, set once and never committed:
+#   npx wrangler secret put BOT_TOKEN
+#   npx wrangler secret put CHAT_ID
