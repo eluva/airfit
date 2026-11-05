@@ -85,5 +85,69 @@ if(form){
   $('s-back').onclick=()=>{form.hidden=false;sent.classList.remove('on')};
 }
 
+// phones / tablets: swipe left → next page, right → previous (same order as the menu)
+const PAGES=['index.html','xizmatlar.html','jadval.html','trener.html','narxlar.html','aloqa.html'];
+(()=>{
+  const cur=PAGES.indexOf(location.pathname.split('/').pop()||'index.html');
+  const main=document.querySelector('main');
+  if(cur<0||!main||!('ontouchstart' in window))return;
+  const parts=[main,document.querySelector('footer')].filter(Boolean);
+  const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const q=new URLSearchParams(location.search).get('lang'),lp=q?'?lang='+q:'';
+  const name=i=>i===0?t('Bosh sahifa'):(document.querySelector(`#menu a[href="${PAGES[i]}"]`)||{}).textContent||'';
+  const hint=document.createElement('div');
+  hint.className='swipe-hint';hint.setAttribute('aria-hidden','true');document.body.appendChild(hint);
+  const move=(x,anim)=>parts.forEach(el=>{
+    el.style.transition=anim?'transform .22s ease-out,opacity .22s ease-out':'none';
+    el.style.transform=x?`translateX(${x}px)`:'';
+    el.style.opacity=x?Math.max(.35,1-Math.abs(x)/innerWidth):'';
+  });
+  const far=dx=>Math.abs(dx)>innerWidth*.25;
+  let x0,y0,t0,dx=0,mode=null; // mode: 'x' page swipe, 'y' normal scroll
+  addEventListener('touchstart',e=>{
+    const p=e.touches[0];
+    dx=0;mode=null;
+    // ignore: multi-touch, open menu, wide screens, screen edges (browser back gesture), form fields, map
+    if(e.touches.length>1||nav.classList.contains('open')||innerWidth>1000||p.clientX<24||p.clientX>innerWidth-24||e.target.closest('input,select,textarea,.map')){mode='y';return}
+    x0=p.clientX;y0=p.clientY;t0=Date.now();
+  },{passive:true});
+  addEventListener('touchmove',e=>{
+    if(mode==='y')return;
+    const p=e.touches[0];
+    dx=p.clientX-x0;
+    if(!mode){
+      const dy=p.clientY-y0;
+      if(Math.abs(dx)<12&&Math.abs(dy)<12)return;
+      mode=Math.abs(dx)>Math.abs(dy)*1.4?'x':'y';
+      if(mode==='y')return;
+    }
+    const to=cur-Math.sign(dx),ok=to>=0&&to<PAGES.length;
+    if(!still)move(ok?dx:dx/5);
+    if(ok){
+      hint.textContent=dx<0?name(to)+' →':'← '+name(to);
+      hint.className='swipe-hint '+(dx<0?'r':'l')+(far(dx)?' go':'');
+      hint.style.opacity=Math.min(1,Math.abs(dx)/(innerWidth*.2));
+    }else hint.style.opacity=0;
+  },{passive:true});
+  addEventListener('touchend',()=>{
+    if(mode!=='x')return;
+    mode=null;hint.style.opacity=0;
+    const to=cur-Math.sign(dx),flick=Math.abs(dx)>60&&Date.now()-t0<300;
+    if((far(dx)||flick)&&to>=0&&to<PAGES.length){
+      try{sessionStorage.setItem('swipe',dx<0?'next':'prev')}catch(_){}
+      const go=()=>{location.href=PAGES[to]+lp};
+      if(still)return go();
+      move(Math.sign(dx)*innerWidth,true);setTimeout(go,180);
+    }else move(0,true);
+  });
+  addEventListener('touchcancel',()=>{if(mode==='x'){move(0,true);hint.style.opacity=0}mode=null});
+  // arriving by swipe: the new page slides in from the side it came from
+  let from=null;
+  try{from=sessionStorage.getItem('swipe');sessionStorage.removeItem('swipe')}catch(_){}
+  if(from&&!still){move((from==='next'?1:-1)*innerWidth*.3);requestAnimationFrame(()=>requestAnimationFrame(()=>move(0,true)))}
+  // coming back with the browser's Back button restores the page as it was left — reset it
+  addEventListener('pageshow',e=>{if(e.persisted){move(0);hint.style.opacity=0}});
+})();
+
 const yr=$('yr');
 if(yr)yr.textContent=new Date().getFullYear();

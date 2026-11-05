@@ -13,6 +13,7 @@ const I18N={
   'Menyuni ochish':['Открыть меню','Open menu'],
   'Menyuni yopish':['Закрыть меню','Close menu'],
   'Til':['Язык','Language'],
+  'Bosh sahifa':['Главная','Home'],
   'AirFit — Ayollar fitnes zali, Toshkent':['AirFit — женский фитнес-зал, Ташкент','AirFit — women’s gym, Tashkent'],
   'Qo‘ng‘iroq':['Позвонить','Call'],
   'Bepul kunga yozilish':['Записаться на бесплатный день','Book a free day'],
