@@ -17,17 +17,17 @@ const PRICES={
 
 const $=id=>document.getElementById(id);
 const nav=$('nav'),burger=$('burger');
-const setMenu=open=>{nav.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);burger.textContent=open?'✕':'☰';burger.setAttribute('aria-label',open?'Menyuni yopish':'Menyuni ochish')};
+const setMenu=open=>{nav.classList.toggle('open',open);burger.setAttribute('aria-expanded',open);burger.textContent=open?'✕':'☰';burger.setAttribute('aria-label',t(open?'Menyuni yopish':'Menyuni ochish'))};
 burger.onclick=()=>setMenu(!nav.classList.contains('open'));
 
 // schedule page
 const days=$('days'),cls=$('classes');
 if(days){
   const show=d=>{
-    [...days.children].forEach(b=>{const on=b.textContent===d;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
-    cls.innerHTML=SCHEDULE[d].map(c=>`<div class="cl ${c[4]}"><div class="tm">${c[0]}</div><div><h4>${c[1]}</h4>${c[2]?`<small>Trener: ${c[2]}</small>`:''}</div><span class="lvl">${c[3]}</span><a href="aloqa.html" data-class="${c[1]} · ${d} ${c[0]}">Band qilish →</a></div>`).join('');
+    [...days.children].forEach(b=>{const on=b.dataset.d===d;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
+    cls.innerHTML=SCHEDULE[d].map(c=>`<div class="cl ${c[4]}"><div class="tm">${c[0]}</div><div><h4>${t(c[1])}</h4>${c[2]?`<small>${t('Trener: {n}',{n:t(c[2])})}</small>`:''}</div><span class="lvl">${t(c[3])}</span><a href="aloqa.html" data-class="${t(c[1])} · ${t(d)} ${c[0]}">${t('Band qilish →')}</a></div>`).join('');
   };
-  Object.keys(SCHEDULE).forEach(d=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.textContent=d;b.onclick=()=>show(d);days.appendChild(b)});
+  Object.keys(SCHEDULE).forEach(d=>{const b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.dataset.d=d;b.textContent=t(d);b.onclick=()=>show(d);days.appendChild(b)});
   show({1:'Du',2:'Se',3:'Ch',4:'Pa',5:'Ju',6:'Sh'}[new Date().getDay()]||'Du');
 }
 
@@ -38,12 +38,13 @@ function term(m){
   document.querySelectorAll('[data-plan]').forEach(card=>{
     const p=PRICES[card.dataset.plan],save=(p[1]-p[m])*m;
     card.querySelector('.pc span').textContent=fmt(p[m]);
-    card.querySelector('.per').textContent=m==1?'1 oylik abonement':`${m} oy · jami ${fmt(p[m]*m)} so‘m`;
-    card.querySelector('.save').textContent=save?`${fmt(save)} so‘m tejaysiz`:'';
-    card.querySelector('.btn').dataset.class=`${p.name} · ${m} oy`;
+    card.querySelector('.per').textContent=m==1?t('1 oylik abonement'):t('{m} oy · jami {s} so‘m',{m,s:fmt(p[m]*m)});
+    card.querySelector('.save').textContent=save?t('{s} so‘m tejaysiz',{s:fmt(save)}):'';
+    card.querySelector('.btn').dataset.class=`${t(p.name)} · ${t(m+' oy')}`;
   });
 }
 document.querySelectorAll('#period button').forEach(b=>b.onclick=()=>term(+b.dataset.m));
+if($('period'))term(1);
 
 // any "book" link carries its class into the form — on this page, or via ?c= on the contact page
 const fClass=$('f-class');
@@ -63,18 +64,18 @@ if(form){
     const v=id=>$(id).value.trim();
     let ok=false;
     if(ORDER_URL){
-      send.disabled=true;send.textContent='Yuborilmoqda…';
+      send.disabled=true;send.textContent=t('Yuborilmoqda…');
       try{
         const r=await fetch(ORDER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:v('f-name'),tel:v('f-tel'),dir:v('f-dir'),class:v('f-class'),website:v('f-web')})});
         ok=(await r.json()).ok===true;
       }catch(_){}
-      send.disabled=false;send.textContent='Yuborish →';
+      send.disabled=false;send.textContent=t('Yuborish →');
     }
     if(ok){
-      $('s-title').textContent='Arizangiz qabul qilindi!';
-      $('s-text').textContent='Tez orada siz bilan bog‘lanamiz. Shoshilinch bo‘lsa — qo‘ng‘iroq qiling.';
+      $('s-title').textContent=t('Arizangiz qabul qilindi!');
+      $('s-text').textContent=t('Tez orada siz bilan bog‘lanamiz. Shoshilinch bo‘lsa — qo‘ng‘iroq qiling.');
     }else{
-      const msg=['Assalomu alaykum! AirFit’ga yozilmoqchiman.','Ism: '+v('f-name'),'Telefon: '+v('f-tel'),'Yo‘nalish: '+v('f-dir')].concat(v('f-class')?['Dars: '+v('f-class')]:[]).join('\n');
+      const msg=[t('Assalomu alaykum! AirFit’ga yozilmoqchiman.'),t('Ism')+': '+v('f-name'),t('Telefon')+': '+v('f-tel'),t('Yo‘nalish')+': '+v('f-dir')].concat(v('f-class')?[t('Dars')+': '+v('f-class')]:[]).join('\n');
       $('s-wa').href=`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
       navigator.clipboard&&navigator.clipboard.writeText(msg).catch(()=>{});
     }

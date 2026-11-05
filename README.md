@@ -9,6 +9,7 @@ Single static page, no build step: open `index.html`, or upload `index.html` and
 - **Schedule**: the `SCHEDULE` object at the bottom of `index.html`.
 - **Phone** used by the sign-up form (Telegram / WhatsApp links): `PHONE` in the same script.
 - **Prices**: the `PRICES` object in the same script (monthly price per plan for 1 / 3 / 6 months; totals and savings are calculated). Massage / manicure prices and the promo cards are in the `#narxlar` section.
+- **Languages** (UZ / RU / EN): Uzbek text lives in the HTML; Russian and English are in `i18n.js`, keyed by the exact Uzbek text. If you change Uzbek text on a page, change its key in `i18n.js` too, or that line stays in Uzbek in RU/EN. `?lang=ru` in a link opens the site in Russian.
 - **Logo**: `images/airfit-logo-h.png` (header), `images/airfit-logo.png` (footer), `images/airfit-icon.png` (favicon) — made from `images/logo (2).png`.
 
 ## Confirm before launch
